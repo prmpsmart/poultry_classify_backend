@@ -44,3 +44,5 @@ classify(file)
 
 # git filter-repo --path-glob '!model/poultry_disease_classification.keras'
 # git filter-branch --tree-filter 'rm -f model/poultry_disease_classification.keras' HEAD
+
+# ngrok http --domain=holy-tightly-snail.ngrok-free.app 8000
