@@ -1,8 +1,5 @@
 opencv-python
 numpy
-# tensorflow
 keras
-# keras-cv
-# keras-core
 fastapi
 uvicorn
