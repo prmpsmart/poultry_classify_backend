@@ -53,7 +53,7 @@ def resize_image_with_aspect_ratio(
     image_path: str = "",
     target_size: tuple = (360, 360),
 ):
-    assert image_path or image_path
+    assert image_string or image_path
 
     if image_path:
         image = cv2.imread(image_path)

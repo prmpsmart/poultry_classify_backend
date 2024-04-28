@@ -31,7 +31,7 @@ login(True)
 login()
 
 file = r"C:\Users\USER\Desktop\Workspace\PoultryClass\poultry_disease_classification\images\cocci.png"
-file = r"C:\Users\USER\Desktop\Workspace\PoultryClass\poultry_disease_classification\images\cocci.0.png"
+file = r"C:\Users\USER\Desktop\Workspace\PoultryClass\poultry_disease_classification\images\cocci.0.jpg"
 
 classify(file)
 
