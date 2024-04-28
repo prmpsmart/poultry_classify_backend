@@ -2,27 +2,33 @@ import requests, base64
 
 
 url = "http://localhost:8000"
+url = "https://holy-tightly-snail.ngrok-free.app"
+
+
+def post(path: str, json: dict):
+    return requests.post(
+        f"{url}/{path}",
+        json=json,
+        headers={
+            "ngrok-skip-browser-warning": "1",
+            "User-Agent": "prmpsmart/1.0",
+        },
+    )
 
 
 def login(new: bool = False):
-    res = requests.post(
-        f"{url}/login",
-        json=dict(
-            email="prmpsmart@gmail.com",
-            password="prmp",
-            new=new,
-        ),
+    res = post(
+        "login",
+        json=dict(email="prmpsmart@gmail.com", password="prmp", new=new),
     )
     print(res.json())
 
 
 def classify(file: str):
     image = base64.b64encode(open(file, "rb").read()).decode()
-    res = requests.post(
-        f"{url}/classify",
-        json=dict(
-            image=image,
-        ),
+    res = post(
+        "classify",
+        json=dict(image=image),
     )
     print(res.json())
 
