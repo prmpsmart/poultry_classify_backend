@@ -1,6 +1,7 @@
 import base64, tempfile, os
 from ultralytics import YOLO
-import numpy
+
+dirname = os.path.dirname(__file__)
 
 
 def arrayToString(image) -> str:
@@ -13,14 +14,20 @@ def arrayToString(image) -> str:
 
 
 def make_inference_from_image(path_to_img: str) -> str:
-    model = YOLO("best.pt")
+    model = YOLO(
+        os.path.join(
+            dirname,
+            "model/best.pt",
+        ),
+    )
     result = model.predict(
         path_to_img,
         conf=0.5,
     )[0]
     base64_image = arrayToString(result)
+
     # print(len(base64_image))
-    return base64_image
+    return str(result.names.get(0)), base64_image
 
 
 def classify2(image_string: str) -> str:

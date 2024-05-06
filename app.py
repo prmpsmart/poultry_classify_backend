@@ -81,12 +81,15 @@ def classify(req: ClassRequest):
 @app.post("/classify2")
 def classify(req: ClassRequest):
     try:
+        disease, disease_image = classify2(req.image)
         return dict(
             detail="Success",
-            disease_image=classify2(req.image),
+            disease=disease,
+            disease_image=disease_image,
         )
     except Exception as error:
+        print(error)
         raise HTTPException(
             400,
-            detail=f"Invalid base64 image string.\n{error}",
+            detail="Invalid base64 image string.",
         )
