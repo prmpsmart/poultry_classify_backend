@@ -1,8 +1,9 @@
 from typing import Optional
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-import json
-from classify1 import classify1, os
+import json, os
+
+# from classify1 import classify1
 from classify2 import classify2
 
 dirname = os.path.dirname(__file__)
@@ -64,18 +65,18 @@ def login(req: LoginRequest):
             return dict(detail="User logged in successfully.")
 
 
-@app.post("/classify1")
-def classify(req: ClassRequest):
-    try:
-        return dict(
-            detail="Success",
-            disease=classify1(req.image),
-        )
-    except Exception as error:
-        raise HTTPException(
-            400,
-            detail=f"Invalid base64 image string.\n{error}",
-        )
+# @app.post("/classify1")
+# def classify(req: ClassRequest):
+#     try:
+#         return dict(
+#             detail="Success",
+#             disease=classify1(req.image),
+#         )
+#     except Exception as error:
+#         raise HTTPException(
+#             400,
+#             detail=f"Invalid base64 image string.\n{error}",
+#         )
 
 
 @app.post("/classify2")

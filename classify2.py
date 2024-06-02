@@ -20,10 +20,14 @@ def make_inference_from_image(path_to_img: str) -> str:
             "model/best.pt",
         ),
     )
-    result = model.predict(
+    results = model.predict(
         path_to_img,
         conf=0.5,
-    )[0]
+    )
+
+    print(results)
+
+    result = results[0]
     base64_image = arrayToString(result)
 
     # print(len(base64_image))
