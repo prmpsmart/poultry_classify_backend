@@ -360,6 +360,15 @@ class Account(Widget):
         return self.window().show_home()
 
 
+recommendations = {
+    "healthy": "Continue standard care",
+    "coccidiosis": "Administer anti-coccidial medications e.g Amprolium (Amprol, Corid) OR Decoquinate (Deccox)",
+    "newcastle disease": "Isolate and vaccinate (B1 Type, LaSota Strain)",
+    "salmonella": "Administer Salmonella medications (Add enrofloxacin to drinking water)",
+    "unhealthy": "Investigate further, consult a veterinarian",
+}
+
+
 class Home(Widget):
     def __init__(self):
         super().__init__()
@@ -389,6 +398,14 @@ class Home(Widget):
         hlay = QHBoxLayout()
         lay.addLayout(hlay)
 
+        hlay.addWidget(QLabel("Recommendations : "))
+        self.recommendations = QLabel()
+        self.recommendations.setWordWrap(True)
+        hlay.addWidget(self.recommendations)
+
+        hlay = QHBoxLayout()
+        lay.addLayout(hlay)
+
         hlay.addWidget(QLabel("History : "))
         self.history_combo = QComboBox()
         hlay.addWidget(self.history_combo)
@@ -408,7 +425,7 @@ class Home(Widget):
 
     def on_history(self, history: str):
         file = f"{d}/{history}"
-        
+
         if os.path.isfile(file):
             self.returned_pixmap = None
             self.pixmap = QPixmap(file)
@@ -425,7 +442,8 @@ class Home(Widget):
         file, _ = QFileDialog.getOpenFileName(
             self,
             "Select an image file",
-            pictures_dir.absolutePath(),
+            # pictures_dir.absolutePath(),
+            '.',
             "Images (*.png *.jpg *.jpeg)",
         )
         if file:
@@ -446,6 +464,9 @@ class Home(Widget):
             self.image_label.setPixmap(pixmap.scaledToHeight(self.image_label.height()))
 
     def reload(self):
+        if not self.pixmap:
+            return
+
         self.returned_pixmap = None
         self.setPixmap()
 
@@ -459,6 +480,8 @@ class Home(Widget):
         disease_image = data.get("disease_image")
 
         # self.disease_name.setText(disease or "No disease found")
+
+        self.recommendations.setText(recommendations.get(disease or "unhealthy"))
 
         if disease and disease_image:
             dt = str(datetime.datetime.now()).replace(":", "-")
@@ -494,8 +517,8 @@ class Window(QWidget):
         self.account.hide()
         self.home.show()
 
-    def mousePressEvent(self, _):
-        App.instance().quit()
+    # def mousePressEvent(self, _):
+    #     App.instance().quit()
 
 
 class App(QApplication):

@@ -1,8 +1,8 @@
 import requests, base64
 
 
-url = "http://localhost:8000"
 url = "https://holy-tightly-snail.ngrok-free.app"
+url = "http://localhost:8000"
 
 
 def post(path: str, json: dict):
@@ -19,7 +19,7 @@ def post(path: str, json: dict):
 def login(new: bool = False):
     res = post(
         "login",
-        json=dict(email="prmpsmart@gmail.com", password="prmp", new=new),
+        json=dict(email="prmpsmart@gmail.com", password="prmpsmart", new=new),
     )
     print(res.json())
 
@@ -27,17 +27,18 @@ def login(new: bool = False):
 def classify(file: str):
     image = base64.b64encode(open(file, "rb").read()).decode()
     res = post(
-        "classify",
+        "classify2",
         json=dict(image=image),
     )
-    print(res.json())
+    print(res.json()['disease'])
 
 
-login(True)
+# login(True)
 login()
 
 file = r"C:\Users\USER\Desktop\Workspace\PoultryClass\poultry_disease_classification\images\cocci.png"
 file = r"C:\Users\USER\Desktop\Workspace\PoultryClass\poultry_disease_classification\images\cocci.0.jpg"
+file = r"C:\Users\USER\Pictures\kenny.jpg"
 
 classify(file)
 
